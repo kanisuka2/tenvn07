@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chúc Mừng Năm Mới 2026 - An Khang Thịnh Vượng</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            overflow: hidden;
+            background: linear-gradient(135deg, #8b0000 0%, #bc002d 100%);
+            color: white;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        /* Hình nền với hiệu ứng pháo hoa */
+        .tet-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(255, 215, 0, 0.3) 0%, transparent 25%),
+                radial-gradient(circle at 80% 70%, rgba(255, 0, 0, 0.3) 0%, transparent 25%),
+                radial-gradient(circle at 40% 80%, rgba(255, 105, 180, 0.3) 0%, transparent 25%),
+                linear-gradient(135deg, #8b0000 0%, #bc002d 100%);
+            z-index: 1;
+        }
+
+        /* Canvas pháo hoa nền - SỬA LỖI PHÁO HOA */
+        #backgroundFireworks {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        /* Container chính */
+        .container {
+            position: relative;
+            z-index: 10;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 20px 0 40px 0;
+        }
+
+        .title {
+            background: linear-gradient(to right, #ffd700, #ff9500, #ffd700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 40px rgba(255, 215, 0, 0.7);
+            animation: glow 2s infinite alternate;
+        }
+
+        .title h1 {
+            font-size: 4rem;
+            margin-bottom: 15px;
+            letter-spacing: 2px;
+        }
+
+        .title p {
+            font-size: 2.5rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        @keyframes glow {
+            0% { text-shadow: 0 0 20px rgba(255, 215, 0, 0.7); }
+            100% { text-shadow: 0 0 40px rgba(255, 215, 0, 1), 0 0 60px rgba(255, 215, 0, 0.7); }
+        }
+
+        /* Nội dung chính - bố cục 3 cột */
+        .main-content {
+            display: flex;
+            flex: 1;
+            gap: 30px;
+            height: 70vh;
+        }
+
+        /* Cột bên trái - Cây đào đẹp */
+        .left-column {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+            position: relative;
+        }
+
+        /* Cột bên phải - Cây mai đẹp */
+        .right-column {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+            position: relative;
+        }
+
+        /* Cột giữa - 54 thẻ bài */
+        .center-column {
+            flex: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(9, 1fr);
+            grid-template-rows: repeat(6, 1fr);
+            gap: 12px;
+            width: 100%;
+            height: 100%;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
+            backdrop-filter: blur(15px);
+            border: 3px solid rgba(255, 215, 0, 0.4);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Thẻ bài - ĐÃ SỬA: THÊM CHỮ CHÚC MỪNG */
+        .card {
+            width: 100%;
+            height: 100%;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-style: preserve-3d;
+            border-radius: 12px;
+        }
+
+        .card.flipped .card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+            overflow: hidden;
+        }
+
+        .card-front {
+            background: linear-gradient(135deg, #bc002d, #8b0000);
+            border: 4px solid #ffd700;
+            box-shadow: 
+                inset 0 0 20px rgba(0, 0, 0, 0.2),
+                0 8px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .card-back {
+            background: linear-gradient(135deg, #ffd700, #ff9500);
+            transform: rotateY(180deg);
+            color: #bc002d;
+            font-weight: bold;
+            font-size: 1.2rem;
+            box-shadow: inset 0 0 30px rgba(255, 255, 255, 0.3);
+        }
+
+        .horse-icon {
+            font-size: 2.5rem;
+            margin-bottom: 5px;
+            filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
+        }
+
+        .card-text {
+            font-size: 0.9rem;
+            font-weight: bold;
+            color: #ffd700;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+        }
+
+        .money-amount {
+            font-size: 2rem;
+            font-weight: 900;
+            margin-top: 5px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            padding: 5px 10px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            border: 2px solid #bc002d;
+        }
+
+        .congrats-text {
+            font-size: 1rem;
+            color: #bc002d;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        /* Container cây */
+        .tree-container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+        }
+
+        /* Lì xì treo trên cây */
+        .tree-envelope {
+            position: absolute;
+            width: 50px;
+            height: 70px;
+            background: linear-gradient(135deg, #bc002d, #8b0000);
+            border: 3px solid #ffd700;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #ffd700;
+            font-weight: bold;
+            font-size: 1.5rem;
+            z-index: 100;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+            animation: swingEnvelope 4s ease-in-out infinite;
+            cursor: pointer;
+        }
+
+        @keyframes swingEnvelope {
+            0%, 100% { transform: rotate(-8deg); }
+            50% { transform: rotate(8deg); }
+        }
+
+        /* Vật phẩm rơi dày đặc */
+        .falling-item {
+            position: absolute;
+            z-index: 5;
+            animation: fallItem linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes fallItem {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(600px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Thông tin ở dưới */
+        .info {
+            text-align: center;
+            padding: 25px;
+            margin-top: 30px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            backdrop-filter: blur(20px);
+            border: 3px solid rgba(255, 215, 0, 0.5);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            margin-top: 15px;
+        }
+
+        .stat-item {
+            font-size: 1.5rem;
+            color: #ffd700;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .stat-item i {
+            font-size: 2rem;
+        }
+
+        /* Nút âm nhạc nhỏ */
+        .music-control {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+        }
+
+        .music-btn {
+            background: rgba(255, 215, 0, 0.9);
+            color: #bc002d;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s;
+        }
+
+        .music-btn:hover {
+            transform: scale(1.1);
+            background: rgba(255, 215, 0, 1);
+        }
+
+        /* Responsive */
+        @media (max-width: 1400px) {
+            .cards-container {
+                grid-template-columns: repeat(7, 1fr);
+                grid-template-rows: repeat(8, 1fr);
+                gap: 10px;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .main-content {
+                flex-direction: column;
+                height: auto;
+                gap: 40px;
+            }
+            
+            .cards-container {
+                grid-template-columns: repeat(9, 1fr);
+                grid-template-rows: repeat(6, 1fr);
+                height: 60vh;
+            }
+            
+            .title h1 {
+                font-size: 3rem;
+            }
+            
+            .title p {
+                font-size: 2rem;
+            }
+            
+            .stats {
+                gap: 30px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .cards-container {
+                grid-template-columns: repeat(6, 1fr);
+                grid-template-rows: repeat(9, 1fr);
+            }
+            
+            .title h1 {
+                font-size: 2.5rem;
+            }
+            
+            .title p {
+                font-size: 1.8rem;
+            }
+            
+            .stats {
+                flex-direction: column;
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hình nền Tết -->
+    <div class="tet-background"></div>
+    
+    <!-- Canvas pháo hoa nền -->
+    <canvas id="backgroundFireworks"></canvas>
+    
+    <!-- Nút điều khiển âm nhạc -->
+    <div class="music-control">
+        <button id="musicToggle" class="music-btn">
+            <i class="fas fa-volume-up"></i>
+        </button>
+    </div>
+    
+    <!-- Audio cho nhạc Tết - SẼ HƯỚNG DẪN THÊM FILE -->
+    <audio id="tetMusic" loop>
+        <!-- Thay src="tet-music.mp3" bằng file nhạc của bạn -->
+        <source src="tet-music.mp3" type="audio/mpeg">
+        <source src="https://assets.mixkit.co/music/preview/mixkit-happy-new-year-2019-479.mp3" type="audio/mpeg">
+    </audio>
+    
+    <!-- Container chính -->
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="title">
+                <h1>🎉 CHÚC MỪNG NĂM MỚI 2026 🎉</h1>
+                <p>An Khang - Thịnh Vượng</p>
+            </div>
+        </div>
+        
+        <!-- Nội dung chính -->
+        <div class="main-content">
+            <!-- Cột bên trái - Cây đào -->
+            <div class="left-column">
+                <div class="tree-container">
+                    <div class="tree" id="peachTree">
+                        <!-- Cây đào sẽ được vẽ bằng JavaScript -->
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Cột giữa - 54 thẻ bài -->
+            <div class="center-column">
+                <div class="cards-container" id="cardsContainer">
+                    <!-- 54 thẻ bài sẽ được tạo bằng JavaScript -->
+                </div>
+            </div>
+            
+            <!-- Cột bên phải - Cây mai -->
+            <div class="right-column">
+                <div class="tree-container">
+                    <div class="tree" id="apricotTree">
+                        <!-- Cây mai sẽ được vẽ bằng JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Thông tin -->
+        <div class="info">
+            <div class="stats">
+                <div class="stat-item">
+                    <i class="fas fa-horse-head"></i> 
+                    <span>Lì xì đã mở: <span id="openedCount">0</span>/54</span>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-money-bill-wave"></i> 
+                    <span>Tổng tiền: <span id="totalMoney">0</span> VND</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Lớp chính điều khiển ứng dụng
+        class Tet2026App {
+            constructor() {
+                this.cards = [];
+                this.totalMoney = 0;
+                this.openedCount = 0;
+                this.cardValues = this.generateCardValues(); // 54 thẻ
+                this.cardIcons = ['🐎', '🏇', '🎠', '🦄'];
+                this.isAnimating = false;
+                this.fallingItemsCount = 0;
+                this.fireworks = [];
+                
+                // DOM Elements
+                this.cardsContainer = document.getElementById('cardsContainer');
+                this.openedCountDisplay = document.getElementById('openedCount');
+                this.totalMoneyDisplay = document.getElementById('totalMoney');
+                this.musicToggle = document.getElementById('musicToggle');
+                this.tetMusic = document.getElementById('tetMusic');
+                this.peachTree = document.getElementById('peachTree');
+                this.apricotTree = document.getElementById('apricotTree');
+                this.canvas = document.getElementById('backgroundFireworks');
+                this.ctx = this.canvas.getContext('2d');
+                
+                // Khởi tạo
+                this.init();
+            }
+            
+            // Tạo giá trị cho 54 thẻ bài
+            generateCardValues() {
+                const values = [];
+                
+                // 1 x 100k
+                values.push(100000);
+                
+                // 5 x 50k
+                for (let i = 0; i < 5; i++) values.push(50000);
+                
+                // 20 x 20k
+                for (let i = 0; i < 20; i++) values.push(20000);
+                
+                // 23 x 10k (20 + 3 thêm)
+                for (let i = 0; i < 23; i++) values.push(10000);
+                
+                // 5 x 5k
+                for (let i = 0; i < 5; i++) values.push(5000);
+                
+                // Xáo trộn các giá trị
+                return this.shuffleArray(values);
+            }
+            
+            // Hàm xáo trộn mảng
+            shuffleArray(array) {
+                for (let i = array.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [array[i], array[j]] = [array[j], array[i]];
+                }
+                return array;
+            }
+            
+            init() {
+                // Thiết lập kích thước canvas
+                this.resizeCanvas();
+                window.addEventListener('resize', () => this.resizeCanvas());
+                
+                this.createCards();
+                this.createTrees();
+                this.startFallingItems();
+                this.startBackgroundFireworks();
+                this.setupMusic();
+                
+                // Bắt đầu vòng lặp animation
+                this.animate();
+            }
+            
+            resizeCanvas() {
+                this.canvas.width = window.innerWidth;
+                this.canvas.height = window.innerHeight;
+            }
+            
+            // Tạo 54 thẻ bài - ĐÃ SỬA: THÊM CHỮ CHÚC MỪNG
+            createCards() {
+                this.cardsContainer.innerHTML = '';
+                
+                for (let i = 0; i < 54; i++) {
+                    const card = document.createElement('div');
+                    card.className = 'card';
+                    card.dataset.index = i;
+                    card.dataset.value = this.cardValues[i];
+                    
+                    const randomIcon = this.cardIcons[Math.floor(Math.random() * this.cardIcons.length)];
+                    
+                    card.innerHTML = `
+                        <div class="card-inner">
+                            <div class="card-front">
+                                <div class="horse-icon">${randomIcon}</div>
+                                <div class="card-text">TẾT 2026</div>
+                            </div>
+                            <div class="card-back">
+                                <div class="congrats-text">CHÚC MỪNG</div>
+                                <div class="money-amount">${this.formatMoney(this.cardValues[i])}</div>
+                            </div>
+                        </div>
+                    `;
+                    
+                    // Sự kiện click
+                    card.addEventListener('click', () => {
+                        if (!card.classList.contains('flipped') && !this.isAnimating) {
+                            this.flipCard(card, i);
+                        }
+                    });
+                    
+                    this.cardsContainer.appendChild(card);
+                    this.cards.push(card);
+                }
+            }
+            
+            // Lật thẻ bài
+            flipCard(card, index) {
+                this.isAnimating = true;
+                
+                // Lật thẻ
+                card.classList.add('flipped');
+                
+                // Cập nhật thông tin
+                const value = parseInt(card.dataset.value);
+                setTimeout(() => {
+                    this.totalMoney += value;
+                    this.openedCount++;
+                    
+                    this.totalMoneyDisplay.textContent = this.formatMoney(this.totalMoney);
+                    this.openedCountDisplay.textContent = this.openedCount;
+                    
+                    // Pháo hoa
+                    this.createFirework(
+                        Math.random() * this.canvas.width,
+                        Math.random() * this.canvas.height / 2
+                    );
+                    
+                    // Thêm vật phẩm rơi
+                    this.createFallingItemFromTree();
+                    
+                    // Kiểm tra kết thúc
+                    if (this.openedCount >= 54) {
+                        setTimeout(() => this.showFinalCelebration(), 1500);
+                    }
+                    
+                    this.isAnimating = false;
+                }, 800);
+            }
+            
+            // Tạo cây đào và mai chi tiết
+            createTrees() {
+                // Tạo cây đào
+                this.createDetailedTree(this.peachTree, 'peach');
+                
+                // Tạo cây mai
+                this.createDetailedTree(this.apricotTree, 'apricot');
+                
+                // Thêm lì xì treo trên cây
+                this.createTreeEnvelopes();
+            }
+            
+            // Tạo cây chi tiết với thân, cành, hoa, lá
+            createDetailedTree(treeElement, type) {
+                const isPeach = type === 'peach';
+                
+                // Tạo thân cây chính
+                const trunk = document.createElement('div');
+                trunk.className = 'tree-trunk';
+                trunk.style.cssText = `
+                    position: absolute;
+                    bottom: 0;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    width: ${isPeach ? '50px' : '45px'};
+                    height: 200px;
+                    background: linear-gradient(to right, ${isPeach ? '#8B4513, #A0522D, #8B4513' : '#654321, #8B4513, #654321'});
+                    border-radius: 25px 25px 10px 10px;
+                    z-index: 1;
+                    box-shadow: 
+                        inset 5px 0 10px rgba(0, 0, 0, 0.3),
+                        inset -5px 0 10px rgba(0, 0, 0, 0.3);
+                `;
+                treeElement.appendChild(trunk);
+                
+                // Tạo các cành cây
+                const branchPositions = [
+                    {left: '40%', top: '60%', width: '80px', angle: '-30deg'},
+                    {left: '60%', top: '50%', width: '70px', angle: '30deg'},
+                    {left: '35%', top: '40%', width: '60px', angle: '-45deg'},
+                    {left: '65%', top: '30%', width: '50px', angle: '45deg'},
+                    {left: '45%', top: '20%', width: '40px', angle: '-15deg'},
+                    {left: '55%', top: '15%', width: '40px', angle: '15deg'}
+                ];
+                
+                branchPositions.forEach((pos, index) => {
+                    const branch = document.createElement('div');
+                    branch.className = 'tree-branch';
+                    branch.style.cssText = `
+                        position: absolute;
+                        left: ${pos.left};
+                        top: ${pos.top};
+                        width: ${pos.width};
+                        height: ${isPeach ? '15px' : '12px'};
+                        background: linear-gradient(to right, ${isPeach ? '#8B4513' : '#654321'}, ${isPeach ? '#A0522D' : '#8B4513'});
+                        border-radius: 10px;
+                        transform: rotate(${pos.angle});
+                        transform-origin: left center;
+                        z-index: ${2 + index};
+                        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+                    `;
+                    treeElement.appendChild(branch);
+                });
+                
+                // Tạo hoa/lá
+                const flowerCount = isPeach ? 60 : 50;
+                const flowerColor = isPeach ? ['#FFB6C1', '#FF69B4', '#FF1493'] : ['#FFD700', '#FFA500', '#FF8C00'];
+                const leafColor = isPeach ? ['#32CD32', '#228B22', '#006400'] : ['#FFD700', '#FFA500', '#FF8C00'];
+                
+                for (let i = 0; i < flowerCount; i++) {
+                    const isLeaf = Math.random() > 0.6;
+                    const flower = document.createElement('div');
+                    flower.className = 'tree-flower';
+                    
+                    const size = isLeaf ? 10 + Math.random() * 10 : 8 + Math.random() * 8;
+                    const colors = isLeaf ? leafColor : flowerColor;
+                    const color = colors[Math.floor(Math.random() * colors.length)];
+                    
+                    flower.style.cssText = `
+                        position: absolute;
+                        left: ${15 + Math.random() * 70}%;
+                        top: ${10 + Math.random() * 70}%;
+                        width: ${size}px;
+                        height: ${isLeaf ? size * 0.6 : size}px;
+                        background: ${color};
+                        border-radius: ${isLeaf ? '50% 50% 0 50%' : '50%'};
+                        transform: rotate(${Math.random() * 360}deg);
+                        z-index: ${5 + i};
+                        animation: floatFlower ${3 + Math.random() * 5}s ease-in-out infinite;
+                        animation-delay: ${Math.random() * 5}s;
+                        opacity: 0.9;
+                        ${!isLeaf ? 'box-shadow: 0 0 8px ' + color + ';' : ''}
+                    `;
+                    
+                    treeElement.appendChild(flower);
+                }
+                
+                // Thêm animation cho hoa
+                const style = document.createElement('style');
+                style.textContent = `
+                    @keyframes floatFlower {
+                        0%, 100% { transform: rotate(0deg) translateY(0); }
+                        50% { transform: rotate(5deg) translateY(-5px); }
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+            
+            // Tạo lì xì treo trên cây
+            createTreeEnvelopes() {
+                const texts = ['PHÚC', 'LỘC', 'THỌ'];
+                
+                // Lì xì trên cây đào
+                for (let i = 0; i < 6; i++) {
+                    this.createTreeEnvelope(this.peachTree, texts);
+                }
+                
+                // Lì xì trên cây mai
+                for (let i = 0; i < 6; i++) {
+                    this.createTreeEnvelope(this.apricotTree, texts);
+                }
+            }
+            
+            createTreeEnvelope(treeElement, texts) {
+                const envelope = document.createElement('div');
+                envelope.className = 'tree-envelope';
+                envelope.textContent = texts[Math.floor(Math.random() * texts.length)];
+                
+                // Đặt vị trí ngẫu nhiên trên cây
+                envelope.style.left = `${15 + Math.random() * 70}%`;
+                envelope.style.top = `${20 + Math.random() * 60}%`;
+                envelope.style.animationDelay = `${Math.random() * 4}s`;
+                
+                treeElement.appendChild(envelope);
+            }
+            
+            // Vật phẩm rơi dày đặc từ cây
+            startFallingItems() {
+                // Tạo nhiều vật phẩm rơi liên tục
+                setInterval(() => {
+                    // Từ cây đào
+                    this.createFallingItem(this.peachTree, ['🧧', '🪙', '💰', '🎁']);
+                    
+                    // Từ cây mai
+                    this.createFallingItem(this.apricotTree, ['✨', '⭐', '🌟', '💫']);
+                }, 150); // Tăng tần suất lên 150ms
+            }
+            
+            // Tạo vật phẩm rơi từ cây khi lật thẻ
+            createFallingItemFromTree() {
+                const items = ['🧧', '🪙', '💰', '🎁', '✨', '⭐', '🌟', '💫'];
+                
+                // Tạo nhiều vật phẩm cùng lúc
+                for (let i = 0; i < 8; i++) {
+                    setTimeout(() => {
+                        // Ngẫu nhiên từ cây đào hoặc mai
+                        const tree = Math.random() > 0.5 ? this.peachTree : this.apricotTree;
+                        this.createFallingItem(tree, items);
+                    }, i * 80);
+                }
+            }
+            
+            createFallingItem(treeElement, items) {
+                const item = document.createElement('div');
+                item.className = 'falling-item';
+                item.textContent = items[Math.floor(Math.random() * items.length)];
+                
+                // Đặt vị trí ngẫu nhiên trên cây
+                const rect = treeElement.getBoundingClientRect();
+                const left = rect.left + Math.random() * rect.width;
+                
+                item.style.left = `${left}px`;
+                item.style.top = `${rect.top + 50}px`;
+                item.style.fontSize = `${1.5 + Math.random() * 2}rem`;
+                item.style.animationDuration = `${1.5 + Math.random() * 2}s`;
+                
+                document.body.appendChild(item);
+                
+                // Xóa sau khi rơi xong
+                setTimeout(() => {
+                    if (item.parentNode) {
+                        item.remove();
+                    }
+                }, 4000);
+            }
+            
+            // HỆ THỐNG PHÁO HOA MỚI - SỬA LỖI
+            createFirework(x, y) {
+                const colors = ['#ff0000', '#00ff00', '#ffff00', '#ff00ff', '#00ffff', '#ff9500'];
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                
+                this.fireworks.push({
+                    x: x,
+                    y: y,
+                    particles: this.createParticles(x, y, color),
+                    createdAt: Date.now(),
+                    duration: 2000 // 2 giây
+                });
+            }
+            
+            createParticles(x, y, color) {
+                const particles = [];
+                const count = 150;
+                
+                for (let i = 0; i < count; i++) {
+                    particles.push({
+                        x: x,
+                        y: y,
+                        vx: (Math.random() - 0.5) * 8,
+                        vy: (Math.random() - 0.5) * 8,
+                        radius: Math.random() * 3 + 1,
+                        color: color,
+                        life: 1.0,
+                        decay: 0.005 + Math.random() * 0.01,
+                        gravity: 0.05
+                    });
+                }
+                
+                return particles;
+            }
+            
+            // Vòng lặp animation cho pháo hoa
+            animate() {
+                // Xóa canvas với hiệu ứng fade
+                this.ctx.fillStyle = 'rgba(139, 0, 0, 0.1)';
+                this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+                
+                // Cập nhật và vẽ pháo hoa
+                for (let i = this.fireworks.length - 1; i >= 0; i--) {
+                    const firework = this.fireworks[i];
+                    const age = Date.now() - firework.createdAt;
+                    
+                    if (age > firework.duration) {
+                        this.fireworks.splice(i, 1);
+                        continue;
+                    }
+                    
+                    this.drawFirework(firework);
+                }
+                
+                requestAnimationFrame(() => this.animate());
+            }
+            
+            drawFirework(firework) {
+                firework.particles.forEach(particle => {
+                    // Cập nhật vị trí
+                    particle.x += particle.vx;
+                    particle.y += particle.vy + particle.gravity;
+                    particle.life -= particle.decay;
+                    
+                    if (particle.life > 0) {
+                        // Vẽ particle
+                        this.ctx.beginPath();
+                        this.ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
+                        this.ctx.fillStyle = `rgba(${this.hexToRgb(particle.color)}, ${particle.life})`;
+                        this.ctx.fill();
+                        
+                        // Hiệu ứng sáng
+                        this.ctx.beginPath();
+                        this.ctx.arc(particle.x, particle.y, particle.radius * 2, 0, Math.PI * 2);
+                        this.ctx.fillStyle = `rgba(${this.hexToRgb(particle.color)}, ${particle.life * 0.3})`;
+                        this.ctx.fill();
+                    }
+                });
+            }
+            
+            // Pháo hoa nền liên tục
+            startBackgroundFireworks() {
+                setInterval(() => {
+                    if (Math.random() > 0.3) {
+                        this.createFirework(
+                            Math.random() * this.canvas.width,
+                            Math.random() * this.canvas.height
+                        );
+                    }
+                }, 500);
+            }
+            
+            // Cài đặt nhạc Tết
+            setupMusic() {
+                // Thử phát nhạc tự động
+                const playMusic = () => {
+                    this.tetMusic.volume = 0.5;
+                    this.tetMusic.play().catch(e => {
+                        console.log("Chờ tương tác để phát nhạc...");
+                    });
+                };
+                
+                // Thử phát ngay
+                playMusic();
+                
+                // Phát khi có tương tác đầu tiên
+                document.addEventListener('click', () => {
+                    playMusic();
+                }, { once: true });
+                
+                // Nút điều khiển âm nhạc
+                this.musicToggle.addEventListener('click', () => {
+                    if (this.tetMusic.paused) {
+                        this.tetMusic.play();
+                        this.musicToggle.innerHTML = '<i class="fas fa-volume-up"></i>';
+                    } else {
+                        this.tetMusic.pause();
+                        this.musicToggle.innerHTML = '<i class="fas fa-volume-mute"></i>';
+                    }
+                });
+            }
+            
+            // Hiển thị màn hình kết thúc
+            showFinalCelebration() {
+                // Pháo hoa rực rỡ
+                for (let i = 0; i < 30; i++) {
+                    setTimeout(() => {
+                        this.createFirework(
+                            Math.random() * this.canvas.width,
+                            Math.random() * this.canvas.height
+                        );
+                    }, i * 100);
+                }
+                
+                // Hiển thị thông báo
+                setTimeout(() => {
+                    alert(`🎊 CHÚC MỪNG NĂM MỚI 2026 🎊\n\nTổng số tiền lì xì: ${this.formatMoney(this.totalMoney)} VND\n\nChúc bạn một năm mới An Khang Thịnh Vượng, Vạn Sự Như Ý!`);
+                }, 3000);
+            }
+            
+            // Chuyển hex sang rgb
+            hexToRgb(hex) {
+                const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+                return result ? 
+                    `${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)}` : 
+                    '255, 255, 255';
+            }
+            
+            // Định dạng tiền
+            formatMoney(amount) {
+                return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+            }
+        }
+        
+        // Khởi chạy ứng dụng
+        document.addEventListener('DOMContentLoaded', () => {
+            const app = new Tet2026App();
+            window.tetApp = app;
+        });
+    </script>
+</body>
+</html>
